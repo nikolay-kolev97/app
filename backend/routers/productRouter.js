@@ -1,4 +1,4 @@
-import e from 'express';
+
 import express from 'express'
 import expressAsyncHandler from 'express-async-handler';
 import data from '../data.js';
@@ -9,13 +9,14 @@ const productRouter = express.Router();
 
 //api for sending list of products to front end
 productRouter.get('/',expressAsyncHandler(async(req,res)=>{
+    
     const products = await Product.find({});
     res.send(products);
 }));
 
 
 productRouter.get('/seed', expressAsyncHandler(async(req,res)=>{
-    // await Product.remove({});
+    await Product.remove({});
     const createdProducts = await Product.insertMany(data.products);
     res.send({createdProducts});
 })
